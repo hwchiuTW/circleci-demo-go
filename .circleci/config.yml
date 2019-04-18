@@ -74,22 +74,16 @@ jobs: # basic units of work in a run
     environment: # environment variables for the build itself
       SLACK_WEBHOOK: https://hooks.slack.com/services/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
     steps:
-      - slack/approval
       - run:
           name: deploy
           command: echo "Yo"
-      - slack/notify
+      - slack/notify:
+          message: Deploy done
 workflows:
   version: 2
   build-workflow:
     jobs:
       - build
-      - slack/approval-notification:
-          message: Pending approval
-          webhook: https://hooks.slack.com/services/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
-          requires:
-            - build
-          type: approval
       - deploy:
           requires:
-            - slack/approval-notification
+            - build
