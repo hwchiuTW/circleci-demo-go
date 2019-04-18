@@ -84,6 +84,8 @@ workflows:
   build-workflow:
     jobs:
       - build
+      - slack/approval-notification:
+          message: Pending approval
       - deploy:
           requires:
-            - build
+            - slack/approval-notification
