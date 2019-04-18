@@ -1,4 +1,7 @@
-version: 2 # use CircleCI 2.0
+version: 2.1
+orbs:
+  irc: circleci/irc@0.1.0
+
 jobs: # basic units of work in a run
   build: # runs not using Workflows must have a `build` job as entry point
     docker: # run the steps with Docker
@@ -71,6 +74,9 @@ jobs: # basic units of work in a run
       - run:
           name: deploy
           command: echo "Yo"
+      - irc/notify:
+          server: irc.irccloud.com
+          channel: hwchiu-test
 
 workflows:
   version: 2
