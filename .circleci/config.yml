@@ -75,9 +75,10 @@ jobs: # basic units of work in a run
           name: deploy
           command: echo "Yo"
       - irc/notify:
-          server: irc.irccloud.com
+          server: chat.freenode.net
+          port: 6697
           channel: hwchiu-test
-          nick: hwchiu
+          nick: hwchiu-circleci
 workflows:
   version: 2
   build-workflow:
