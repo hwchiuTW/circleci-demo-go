@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  irc: circleci/irc@0.1.0
+  slack: circleci/slack@2.4.0
 
 jobs: # basic units of work in a run
   build: # runs not using Workflows must have a `build` job as entry point
@@ -68,17 +68,16 @@ jobs: # basic units of work in a run
       - store_test_results: # upload test results for display in Test Summary
           path: /tmp/test-results
   deploy:
+
     docker:
       - image: circleci/golang:1.12
+    environment: # environment variables for the build itself
+      SLACK_WEBHOOK: https://hooks.slack.com/services/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
     steps:
       - run:
           name: deploy
           command: echo "Yo"
-      - irc/notify:
-          server: chat.freenode.net
-          port: 6697
-          channel: hwchiu-test
-          nick: hwchiu-circleci
+      - slack/notify
 workflows:
   version: 2
   build-workflow:
