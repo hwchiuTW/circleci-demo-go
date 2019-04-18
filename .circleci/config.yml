@@ -87,6 +87,9 @@ workflows:
       - slack/approval-notification:
           message: Pending approval
           webhook: https://hooks.slack.com/services/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
+          requires:
+            - build
+          type: approval
       - deploy:
           requires:
             - slack/approval-notification
