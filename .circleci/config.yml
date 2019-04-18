@@ -72,7 +72,7 @@ jobs: # basic units of work in a run
     docker:
       - image: circleci/golang:1.12
     environment: # environment variables for the build itself
-      SLACK_WEBHOOK: https://hooks.slack.com/services/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
+      SLACK_WEBHOOK: https://hooks.slack.com/services/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
     steps:
       - slack/approval
       - run:
@@ -86,7 +86,7 @@ workflows:
       - build
       - slack/approval-notification:
           message: Pending approval
-          webhook: https://hooks.slack.com/services/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
+          webhook: https://hooks.slack.com/services/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
       - deploy:
           requires:
             - slack/approval-notification
