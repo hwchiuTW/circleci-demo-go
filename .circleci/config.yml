@@ -74,6 +74,7 @@ jobs: # basic units of work in a run
     environment: # environment variables for the build itself
       SLACK_WEBHOOK: https://hooks.slack.com/services/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
     steps:
+      - slack/approval
       - run:
           name: deploy
           command: echo "Yo"
