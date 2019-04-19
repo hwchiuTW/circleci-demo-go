@@ -6,6 +6,33 @@ executors:
     docker:
       - image: circleci/golang:1.12
 
+
+commands:
+  setup_env:
+    parameters:
+      environment:
+        type: string
+        default: "dev"
+    steps:
+      - run:
+          name: "Setup the environment << parameters.environment >>"
+          command: |
+            echo  << parameters.environment >>
+  deploy_env:
+    parameters:
+      environment:
+        type: string
+        default: "dev"
+      seconds:
+        type: string
+        default: "5"
+    steps:
+      - run:
+          name: "Deploy to environment << parameters.environment >>"
+          command: |
+            sleep << parameters.seconds >>
+            echo  << parameters.environment >>
+
 jobs:
   build:
     executor: golang-ci
@@ -17,37 +44,24 @@ jobs:
             sleep 10
             echo "Build Done"
 
+
   deploy:
     executor: golang-ci
     steps:
       - checkout
-      - run:
-          name: Setup Env
-          command:  |
-            sleep 4
-            echo "Setup Dev Environment"
-      - run:
-          name: Deploy to Dev
-          command:  |
-            sleep 4
-            echo "Deploy to Dev Environment"
+      - setup_env
+      - deploy_env
 
   deploy-staging:
     docker:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run:
-          name: Setup Env
-          command:  |
-            sleep 4
-            echo "Setup Staging Environment"
-      - run:
-          name: Deploy to Dev
-          command:  |
-            sleep 4
-            echo "Deploy to Staging Environment"
-
+      - setup_env:
+          environment: staging
+      - deploy_env:
+          environment: staging
+          seconds: "10"
 
 workflows:
   version: 2
