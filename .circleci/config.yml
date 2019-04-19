@@ -71,6 +71,10 @@ workflows:
       - deploy:
           requires:
             - build
+          filters:
+            branches:
+              ignore:
+                - /^staging.*/
       - deploy-staging:
           requires:
             - build
