@@ -1,12 +1,14 @@
 version: 2.1
-orbs:
-  slack: circleci/slack@2.4.0
 
-jobs:
-  build:
+executors:
+  golang-ci:
+    working_directory: ~/repo
     docker:
       - image: circleci/golang:1.12
 
+jobs:
+  build:
+    executor: golang-ci
     steps:
       - checkout
       - run:
@@ -16,8 +18,7 @@ jobs:
             echo "Build Done"
 
   deploy:
-    docker:
-      - image: circleci/golang:1.12
+    executor: golang-ci
     steps:
       - checkout
       - run:
